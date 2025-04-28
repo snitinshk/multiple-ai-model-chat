@@ -1,5 +1,33 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Multi-AI Chat
+
+A Next.js app with a chat interface that lets users choose between ChatGPT (OpenAI), Gemini (Google), and DeepSeek models. The backend routes requests to the selected model's API.
+
+### Setup
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Create a `.env.local` file in the project root with the following (if you want to use OpenAI or Gemini):
+   ```env
+   OPENAI_API_KEY=your-openai-key
+   GEMINI_API_KEY=your-gemini-key
+   ```
+   DeepSeek does not require an API key for public usage.
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Usage
+- Open [http://localhost:3000](http://localhost:3000) in your browser.
+- Select the AI model from the dropdown, type your message, and chat!
+
+---
+
 ## Getting Started
 
 First, run the development server:
