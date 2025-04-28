@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 import { ChatErrorImpl, ChatResponse, chatRequestSchema, createErrorResponse } from "../types";
 
-const openai = new OpenAI({ 
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
   organization: process.env.OPENAI_ORG_ID,
 });
@@ -30,19 +30,19 @@ export async function POST(req: NextRequest): Promise<NextResponse<ChatResponse>
 
     const body = await req.json();
     console.log("Raw request body:", body);
-    
-    const cleanedMessages = body.messages.map((msg: any) => ({
+
+    const cleanedMessages = body.messages.map((msg: { role: string, content: string }) => ({
       role: msg.role,
       content: msg.content?.trim() || "",
     }));
-    
+
     console.log("Cleaned messages:", cleanedMessages);
-    
+
     const validationResult = chatRequestSchema.safeParse({
       ...body,
       messages: cleanedMessages,
     });
-    
+
     if (!validationResult.success) {
       console.error("Validation errors:", validationResult.error);
       throw new ChatErrorImpl(
@@ -106,8 +106,8 @@ export async function POST(req: NextRequest): Promise<NextResponse<ChatResponse>
       console.error("OpenAI API Error:", error);
       const chatError = createErrorResponse(error, "Failed to get response from OpenAI");
       return NextResponse.json(
-        { 
-          reply: "", 
+        {
+          reply: "",
           error: chatError.message,
           errorType: chatError.type,
           suggestion: chatError.suggestion,
@@ -120,8 +120,8 @@ export async function POST(req: NextRequest): Promise<NextResponse<ChatResponse>
     console.error("Chat API Error:", error);
     const chatError = createErrorResponse(error);
     return NextResponse.json(
-      { 
-        reply: "", 
+      {
+        reply: "",
         error: chatError.message,
         errorType: chatError.type,
         suggestion: chatError.suggestion,
@@ -130,4 +130,4 @@ export async function POST(req: NextRequest): Promise<NextResponse<ChatResponse>
       { status: chatError.statusCode }
     );
   }
-} 
+}

@@ -23,7 +23,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<ChatResponse>
     const body = await req.json();
     console.log("Raw request body:", body);
     
-    const cleanedMessages = body.messages.map((msg: any) => ({
+    const cleanedMessages = body.messages.map((msg: { role: string, content: string }) => ({
       role: msg.role,
       content: msg.content?.trim() || "",
     }));

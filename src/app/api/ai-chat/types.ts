@@ -209,6 +209,7 @@ export function createErrorResponse(
 
   if (error instanceof Error) {
     // Handle API errors with status codes
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const apiError = error as any;
     if (apiError?.response?.status) {
       const status = apiError.response.status.toString();
